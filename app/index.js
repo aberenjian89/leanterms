@@ -1,5 +1,6 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const bodyparser = require('body-parser');
 
 const sequelize = new Sequelize('leanterms','','',{
    host: 'localhost',
@@ -20,21 +21,20 @@ sequelize.authenticate().then(() =>{
     console.error('Unable to Connect to the database:',err)
 });
 
-// DB Connection String
-const connect = "postgres://@localhost/leanterms";
-
 const app = express();
 
 
+const authRouter = require('./routes/auth_routes');
+
+
+//app.use(express.static('../frontend/public'));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
+
+app.use('/Auth',authRouter);
 
 
 app.get('/', function (req, res) {
-    // pg.connect(connect,function(err,client,done){
-    //     // if (err){
-    //     //     return console.error("error fetching client from pool",err)
-    //     // }
-    //     client.query('SELECT $1::int as ')
-    // })
     res.send("Hello World");
 });
 
