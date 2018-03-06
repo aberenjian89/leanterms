@@ -1,7 +1,12 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const bodyparser = require('body-parser');
-const path = require('path')
+const path = require('path');
+const cookieparser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+const authrouter = require('./routes/auth_routes');
+
 
 const sequelize = new Sequelize('leanterms','','',{
    host: 'localhost',
@@ -14,8 +19,7 @@ const sequelize = new Sequelize('leanterms','','',{
        idle: 10000
    }
 });
-
-
+// Testing Connection For Database
 sequelize.authenticate().then(() =>{
     console.log('Connection has been established successfully.');
 }).catch(err =>{
@@ -25,14 +29,16 @@ sequelize.authenticate().then(() =>{
 const app = express();
 
 
-const authRouter = require('./routes/auth_routes');
 
 
 app.use(express.static('frontend/public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
+app.use(cookieparser());
 
-app.use('/Auth',authRouter);
+app.use(authrouter);
+
+
 
 
 app.get('/', function(req, res) {

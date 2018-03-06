@@ -1,13 +1,11 @@
 const express = require('express');
-const authRouter = express.Router();
-const sequelize = require('sequelize');
-
-const router = function(){
-    authRouter.route('/signUp')
-        .post(function (req,res){
-            console.log(req.body);
-        })
-};
+const authrouter = express.Router();
+const UserController = require('../controller/usercontroller');
 
 
-module.exports = router;
+authrouter.route("/api/signup").post(UserController.signup);
+authrouter.route("/api/login").post(UserController.login);
+authrouter.route("/api/logout").delete(UserController.logout);
+authrouter.route("/api/current_user").get(UserController.currentUser);
+
+module.exports = authrouter;
