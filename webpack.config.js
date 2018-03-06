@@ -5,7 +5,7 @@ module.exports = {
     entry: "./frontend/leanterms.jsx",
     output: {
         path: path.resolve(__dirname),
-        filename: "frontend/public/bundle.js"
+        filename: "./frontend/public/bundle.js"
     },
     module: {
         loaders: [

@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const bodyparser = require('body-parser');
+const path = require('path')
 
 const sequelize = new Sequelize('leanterms','','',{
    host: 'localhost',
@@ -27,15 +28,15 @@ const app = express();
 const authRouter = require('./routes/auth_routes');
 
 
-//app.use(express.static('../frontend/public'));
+app.use(express.static('frontend/public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 app.use('/Auth',authRouter);
 
 
-app.get('/', function (req, res) {
-    res.send("Hello World");
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../','index.html'));
 });
 
 let port = process.env.port || 5000;
