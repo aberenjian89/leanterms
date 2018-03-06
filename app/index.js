@@ -1,6 +1,5 @@
 const express = require('express');
 const Sequelize = require('sequelize');
-const pg = require('pg');
 
 const sequelize = new Sequelize('leanterms','','',{
    host: 'localhost',
@@ -27,13 +26,16 @@ const connect = "postgres://@localhost/leanterms";
 const app = express();
 
 
+
+
 app.get('/', function (req, res) {
-   pg.connect(connect,function(err,client,done){
-       if (err){
-           return console.error("error fetching client from pool",err)
-       }
-   })
-   client.query('SELECT $1::int as ')
+    // pg.connect(connect,function(err,client,done){
+    //     // if (err){
+    //     //     return console.error("error fetching client from pool",err)
+    //     // }
+    //     client.query('SELECT $1::int as ')
+    // })
+    res.send("Hello World");
 });
 
 let port = process.env.port || 5000;
