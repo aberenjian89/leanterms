@@ -46,7 +46,7 @@ class Navbar extends React.Component {
   }
 
   handleSubmitForm(e) {
-    this.renderErrors();
+    // this.renderErrors();
     e.preventDefault();
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
@@ -82,16 +82,19 @@ class Navbar extends React.Component {
   }
 
   renderErrors() {
-      return(
-        <ul className="session-errors">
-          {this.props.errors.map((error, i) => (
-            <li className="single-session-error" key={`error-${i}`}>
-              {error}
-            </li>
-          ))}
-        </ul>
-      );
+if (document.getElementById('session-err')){document.getElementById('session-err').value = [];}
+    return(
+      <ul id="session-err"className="session-errors">
+        {this.props.errors.map((error, i) => (
+          <li id="li-err"  key={`error-${i}`}>
+            {error}
+          </li>
+        ))}
+      </ul>
+    );
   }
+
+  
   render() {
     let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let display;

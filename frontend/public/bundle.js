@@ -24471,7 +24471,11 @@ var CreateUser = exports.CreateUser = function CreateUser(user) {
     return $.ajax({
         method: 'POST',
         url: '/api/signup',
-        data: user
+        data: {
+            username: user.username,
+            password: user.password,
+            email: user.email
+        }
     });
 };
 
@@ -24486,8 +24490,11 @@ var Login = exports.Login = function Login(user) {
     return $.ajax({
         method: 'POST',
         url: '/api/login',
-        data: user
-    });
+        data: {
+            username: user.username,
+            password: user.password,
+            email: user.email
+        } });
 };
 
 /***/ }),
@@ -28964,7 +28971,7 @@ var Navbar = function (_React$Component) {
     value: function handleSubmitForm(e) {
       var _this4 = this;
 
-      this.renderErrors();
+      // this.renderErrors();
       e.preventDefault();
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
       for (var i = 0; i < allErrors.length; i++) {
@@ -29002,13 +29009,16 @@ var Navbar = function (_React$Component) {
   }, {
     key: 'renderErrors',
     value: function renderErrors() {
+      if (document.getElementById('session-err')) {
+        document.getElementById('session-err').value = [];
+      }
       return _react2.default.createElement(
         'ul',
-        { className: 'session-errors' },
+        { id: 'session-err', className: 'session-errors' },
         this.props.errors.map(function (error, i) {
           return _react2.default.createElement(
             'li',
-            { className: 'single-session-error', key: 'error-' + i },
+            { id: 'li-err', key: 'error-' + i },
             error
           );
         })

@@ -2,7 +2,11 @@ export const CreateUser = (user) =>
   $.ajax({
       method: 'POST',
       url: '/api/signup',
-      data: user
+      data: {
+          username: user.username,
+          password: user.password,
+          email: user.email
+      }
   });
 
 export const Logout = () =>
@@ -16,5 +20,8 @@ export const Login = (user) =>
     $.ajax({
         method: 'POST',
         url: '/api/login',
-        data: user
-    });
+        data: {
+          username: user.username,
+          password: user.password,
+          email: user.email
+    }});
