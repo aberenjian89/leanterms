@@ -24,6 +24,7 @@ class Navbar extends React.Component {
     if (document.getElementById('email')){document.getElementById('email').value = '';}
     if (document.getElementById('password')){document.getElementById('password').value = '';}
     this.setState({ username: '', password: '', email: '' });
+    this.props.clearErrors();
     this.setState({currentForm: formType});
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
