@@ -25679,36 +25679,498 @@ var _reactRouterDom = __webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var NavBar = function (_React$Component) {
-  _inherits(NavBar, _React$Component);
+var Navbar = function (_React$Component) {
+  _inherits(Navbar, _React$Component);
 
-  function NavBar(props) {
-    _classCallCheck(this, NavBar);
+  function Navbar(props) {
+    _classCallCheck(this, Navbar);
 
-    return _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this, props));
+
+    _this.state = { username: '', password: '', email: '' };
+    _this.changeDisplay = _this.changeDisplay.bind(_this);
+    _this.switchToLogIn = _this.switchToLogIn.bind(_this);
+    _this.switchToSignUp = _this.switchToSignUp.bind(_this);
+    _this.update = _this.update.bind(_this);
+    _this.handlesubmitlogout = _this.handlesubmitlogout.bind(_this);
+    _this.handlesubmitnewuser = _this.handlesubmitnewuser.bind(_this);
+    return _this;
   }
 
-  _createClass(NavBar, [{
+  _createClass(Navbar, [{
+    key: 'changeDisplay',
+    value: function changeDisplay(id) {
+      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
+      for (var i = 0; i < allErrors.length; i++) {
+        allErrors[i].textContent = '';
+      }
+      if (document.getElementById(id)) {
+        if (document.getElementById(id).style.display === 'flex') {
+          document.getElementById(id).style.display = 'none';
+        } else {
+          document.getElementById(id).style.display = 'flex';
+        }
+      }
+    }
+  }, {
+    key: 'update',
+    value: function update(type) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, type, e.target.value));
+      };
+    }
+  }, {
+    key: 'handlesubmitlogin',
+    value: function handlesubmitlogin(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
+      for (var i = 0; i < allErrors.length; i++) {
+        allErrors[i].textContent = '';
+      }
+
+      var user1 = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      return this.props.loginuser(user1).then(function (response) {
+        _this3.setState({ username: '', password: '' });
+        return _this3.props.history.push('./profile');
+      });
+    }
+  }, {
+    key: 'handlesubmitlogout',
+    value: function handlesubmitlogout(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      return this.props.logoutuser().then(function (user) {
+        return _this4.props.history.push('./home');
+      });
+    }
+  }, {
+    key: 'handlesubmitnewuser',
+    value: function handlesubmitnewuser(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
+      for (var i = 0; i < allErrors.length; i++) {
+        allErrors[i].textContent = '';
+      }
+      return this.props.createuser(this.state).then(function (response) {
+        _this5.setState({ username: '', password: '', email: '' });
+        return function (user) {
+          return _this5.props.history.push('./profile');
+        };
+      });
+    }
+  }, {
+    key: 'switchToSignUp',
+    value: function switchToSignUp() {
+      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
+      for (var i = 0; i < allErrors.length; i++) {
+        allErrors[i].textContent = '';
+      }
+      if (document.getElementById('id02')) {
+        document.getElementById('id02').style.display = 'none';
+        document.getElementById('id01').style.display = 'flex';
+      }
+    }
+  }, {
+    key: 'switchToLogIn',
+    value: function switchToLogIn() {
+      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
+      for (var i = 0; i < allErrors.length; i++) {
+        allErrors[i].textContent = '';
+      }
+      if (document.getElementById('id01')) {
+        document.getElementById('id01').style.display = 'none';
+        document.getElementById('id02').style.display = 'flex';
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this6 = this;
+
+      var display = void 0;
+      if (this.props.currentUser && Object.keys(this.props.currentUser).length > 0) {
+        display = _react2.default.createElement(
+          'div',
+          { className: 'if-logged-in-wrap' },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { className: 'create-contract-button', to: '/contract' },
+            'Create Contract'
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { className: 'nav-current-user',
+              to: '/profile' },
+            this.props.currentUser.username
+          ),
+          _react2.default.createElement(
+            'button',
+            {
+              className: 'logout-button',
+              onClick: function onClick(e) {
+                return _this6.handlesubmitlogout(e);
+              }
+            },
+            'Logout'
+          )
+        );
+      } else {
+        display = _react2.default.createElement(
+          'div',
+          { className: 'logged-out-nav' },
+          _react2.default.createElement(
+            'div',
+            { className: 'main-nav' },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { className: 'create-contract-button', to: '/contract' },
+              'Create Contract'
+            ),
+            _react2.default.createElement(
+              'button',
+              {
+                id: 'login-effects',
+                className: 'cd-signup',
+                onClick: function onClick() {
+                  return _this6.changeDisplay('id02');
+                }
+              },
+              'Log In'
+            ),
+            _react2.default.createElement(
+              'button',
+              {
+                id: 'nav-bar-signup',
+                className: 'cd-signup',
+                onClick: function onClick() {
+                  return _this6.changeDisplay('id01');
+                }
+              },
+              'Sign Up'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'id01', className: 'modal' },
+            _react2.default.createElement(
+              'form',
+              { className: 'modal-content' },
+              _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                  'span',
+                  {
+                    onClick: function onClick() {
+                      return _this6.changeDisplay('id01');
+                    },
+                    className: 'close',
+                    title: 'Close Modal'
+                  },
+                  'X'
+                ),
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'Sign Up'
+                ),
+                _react2.default.createElement('hr', null),
+                _react2.default.createElement(
+                  'ul',
+                  { className: 'session-errors' },
+                  this.props.errors ? this.props.errors.map(function (error, i) {
+                    return _react2.default.createElement(
+                      'li',
+                      { className: 'single-session-error', key: i },
+                      error
+                    );
+                  }) : null
+                ),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Username'
+                  )
+                ),
+                _react2.default.createElement('input', {
+                  autoFocus: true,
+                  type: 'text',
+                  placeholder: 'Enter Username',
+                  name: 'email',
+                  onChange: this.update('username'),
+                  required: true
+                }),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Email'
+                  )
+                ),
+                _react2.default.createElement('input', {
+                  type: 'text',
+                  placeholder: 'Enter Email',
+                  name: 'psw',
+                  onChange: this.update('email'),
+                  required: true
+                }),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Password'
+                  )
+                ),
+                _react2.default.createElement('input', {
+                  type: 'password',
+                  placeholder: 'Enter Password',
+                  name: 'psw-repeat',
+                  onChange: this.update('password'),
+                  required: true
+                }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'clearfix' },
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      type: 'submit',
+                      className: 'signup',
+                      onClick: function onClick(e) {
+                        return _this6.handlesubmitnewuser(e);
+                      }
+                    },
+                    'Sign Up'
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      type: 'button',
+                      onClick: function onClick() {
+                        return _this6.changeDisplay('id01');
+                      },
+                      className: 'cancelbtn'
+                    },
+                    'Cancel'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-last-line' },
+                  _react2.default.createElement(
+                    'button',
+                    { type: 'button', className: 'demobtn' },
+                    'Demo'
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'alternative-option' },
+                    'Already have an account?',
+                    ' ',
+                    _react2.default.createElement(
+                      'a',
+                      {
+                        id: 'log-in-instead',
+                        href: '#',
+                        onClick: this.switchToLogIn,
+                        style: { color: '#c24e04d4' }
+                      },
+                      'Log In'
+                    ),
+                    '.'
+                  )
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'id02', className: 'modal' },
+            _react2.default.createElement(
+              'form',
+              { className: 'modal-content' },
+              _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                  'span',
+                  {
+                    onClick: function onClick() {
+                      return _this6.changeDisplay('id02');
+                    },
+                    className: 'close',
+                    title: 'Close Modal'
+                  },
+                  'X'
+                ),
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'Log In'
+                ),
+                _react2.default.createElement('hr', null),
+                _react2.default.createElement(
+                  'ul',
+                  { className: 'session-errors' },
+                  this.props.errors ? this.props.errors.map(function (error, i) {
+                    return _react2.default.createElement(
+                      'li',
+                      { className: 'single-session-error', key: i },
+                      error
+                    );
+                  }) : null
+                ),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Username'
+                  )
+                ),
+                _react2.default.createElement('input', {
+                  autoFocus: true,
+                  type: 'text',
+                  placeholder: 'Enter Username',
+                  onChange: this.update('username'),
+                  required: true
+                }),
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Password'
+                  )
+                ),
+                _react2.default.createElement('input', {
+                  type: 'password',
+                  placeholder: 'Enter Password',
+                  required: true,
+                  onChange: this.update('password')
+                }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'clearfix' },
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      type: 'submit',
+                      className: 'signup',
+                      onClick: function onClick(e) {
+                        return _this6.handlesubmitlogin(e);
+                      }
+                    },
+                    'Log In'
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      type: 'button',
+                      onClick: function onClick() {
+                        return _this6.changeDisplay('id02');
+                      },
+                      className: 'cancelbtn'
+                    },
+                    'Cancel'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-last-line' },
+                  _react2.default.createElement(
+                    'button',
+                    { type: 'button', className: 'demobtn' },
+                    'Demo'
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'alternative-option' },
+                    'Don\'t have an account?',
+                    ' ',
+                    _react2.default.createElement(
+                      'a',
+                      {
+                        id: 'sign-up-instead',
+                        href: '#',
+                        onClick: this.switchToSignUp,
+                        style: { color: '#c24e04d4' }
+                      },
+                      'Sign Up'
+                    ),
+                    '.'
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         null,
-        'HELLO HOUSTON THIS IS THE NAVBAR!'
+        _react2.default.createElement(
+          'div',
+          { className: 'wrap-nav-and-info' },
+          _react2.default.createElement(
+            'div',
+            { className: 'nav-bar' },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/', style: { textDecoration: 'none', color: 'white' } },
+              _react2.default.createElement(
+                'div',
+                { className: 'logo-title-wrap' },
+                _react2.default.createElement('img', {
+                  src: 'http://res.cloudinary.com/aazaiez/image/upload/v1519269426/logo_3_LT_sknvf1.svg',
+                  className: 'LeanTerms-logo-white'
+                }),
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  'LeanTerms'
+                )
+              )
+            )
+          ),
+          display
+        )
       );
     }
   }]);
 
-  return NavBar;
+  return Navbar;
 }(_react2.default.Component);
 
-exports.default = NavBar;
+exports.default = Navbar;
 
 /***/ })
 /******/ ]);
