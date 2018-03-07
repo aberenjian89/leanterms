@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
+import NavbarContainter from './navbar/navbar_container';
+import NavBar from './navbar/navbar';
 
 
 class App extends React.Component {
@@ -12,7 +14,7 @@ class App extends React.Component {
     return (
       <div className="app-div-wrapper">
         <div>
-          Hello World from the App.jsx!!
+          <NavbarContainter/>
         </div>
       </div>
     );
