@@ -9,13 +9,17 @@ const signup = (req,res,next) =>{
 
     const username = req.body.username;
     const password = req.body.password;
+    const email = req.body.email;
     const session_token = crypto.randomBytes(32).toString('hex');
     console.log(password.length);
     if (username.length < 4 ) {
-        errors.unshift("Username should at least 4");
+        errors.unshift("Username should have at least 4 characters");
     }
     if (password.length < 8){
-        errors.unshift("Minimum length for password is 8");
+        errors.unshift("Password should have at least 8 characters");
+    }
+    if (email.length < 4){
+        errors.unshift("Email required to sign up");
     }
 
     if (errors.length > 0){
@@ -53,6 +57,7 @@ const signup = (req,res,next) =>{
 
 
 const login = (req,res,next) =>{
+    const errors = [];
 
     User.findOne({
         where:{
@@ -70,11 +75,13 @@ const login = (req,res,next) =>{
                    username: user.username
                })
            }else{
-               return res.status(400).json("Invalid Username or Password")
+              errors.unshift("Invalid Username or Password");
+              return res.status(400).send(errors);
            }
         });
     }).catch(function () {
-        return res.status(400).json("Invalid Username or Password")
+      errors.unshift("Invalid Username or Password");
+      return res.status(400).send(errors);
     })
 
 };
@@ -111,4 +118,3 @@ module.exports ={
     logout,
     currentUser
 };
-

@@ -8,11 +8,19 @@ class Navbar extends React.Component {
     this.switchDisplay = this.switchDisplay.bind(this);
     this.switchForm = this.switchForm.bind(this);
     this.update = this.update.bind(this);
-    this.handlesubmitlogout = this.handlesubmitlogout.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
+    this.renderErrors = this.renderErrors.bind(this);
+    this.state = {
+      username: '',
+      password: '',
+      email: ''
+    };
+
   }
 
   switchDisplay(formType) {
+    this.setState({ username: '', password: '', email: '' });
     this.setState({currentForm: formType});
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
@@ -27,15 +35,17 @@ class Navbar extends React.Component {
     return e => this.setState({ [type]: e.target.value });
   }
 
-  handlesubmitlogout(e) {
+  handleLogout(e) {
     e.preventDefault();
-    return this.props.logoutuser().then(user => {
+    return this.props.logoutUser().then(user => {
       return this.props.history.push('./home');
     });
   }
 
   handleSubmitForm(e) {
+    this.renderErrors();
     e.preventDefault();
+    this.setState({ username: '', password: '', email: '' });
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
     );
@@ -43,7 +53,7 @@ class Navbar extends React.Component {
       allErrors[i].textContent = '';
     }
     if (this.state.currentForm === 'Sign Up') {
-      return this.props.createuser(this.state).then(response => {
+      return this.props.createUser(this.state).then(response => {
         this.setState({ username: '', password: '', email: '' });
         return user => this.props.history.push('./profile');
       });
@@ -52,7 +62,7 @@ class Navbar extends React.Component {
         username: this.state.username,
         password: this.state.password
       };
-      return this.props.loginuser(user1).then(response => {
+      return this.props.loginUser(user1).then(response => {
         this.setState({ username: '', password: '' });
         return this.props.history.push('./profile');
       });
@@ -60,6 +70,7 @@ class Navbar extends React.Component {
   }
 
   switchForm() {
+    this.setState({ username: '', password: '', email: '' });
     let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
@@ -70,6 +81,30 @@ class Navbar extends React.Component {
     this.switchDisplay(alternative);
   }
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
+  componentWillMount(){
+    this.props.clearErrors();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.props.clearErrors();
+  }
+
+  renderErrors() {
+    this.props.clearErrors();
+      return(
+        <ul className="session-errors">
+          {this.props.errors.map((error, i) => (
+            <li className="single-session-error" key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      );
+  }
   render() {
     let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let display;
@@ -89,7 +124,7 @@ class Navbar extends React.Component {
           </Link>
           <button
             className="logout-button"
-            onClick={e => this.handlesubmitlogout(e)}
+            onClick={e => this.handleLogout(e)}
           >
             Logout
           </button>
@@ -132,15 +167,9 @@ class Navbar extends React.Component {
                 </span>
                 <h1 id="formType">{this.state.currentForm}</h1>
                 <hr />
-                <ul className="session-errors">
-                  {this.props.errors
-                    ? this.props.errors.map((error, i) => (
-                        <li className="single-session-error" key={i}>
-                          {error}
-                        </li>
-                      ))
-                    : null}
-                </ul>
+                <div>
+                  {this.renderErrors()}
+                </div>
                 <label>
                   <b>Username</b>
                 </label>
@@ -184,7 +213,7 @@ class Navbar extends React.Component {
                     className="signup"
                     onClick={e => this.handleSubmitForm(e)}
                   >
-                    {this.state.currentForm}
+                  {this.state.currentForm}
                   </button>
                   <button
                     type="button"

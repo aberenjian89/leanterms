@@ -3,7 +3,6 @@ import * as SessionAPI from '../utils/session_utils';
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 
-
 export const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
   currentUser
@@ -13,7 +12,6 @@ export const receiveErrors = errors => ({
   type: RECEIVE_SESSION_ERRORS,
   errors
 });
-
 
 export const signup = user => dispatch => (
   SessionAPI.CreateUser(user).then(
@@ -33,4 +31,8 @@ export const logout = () => dispatch => (
   SessionAPI.Logout().then(
     user => (dispatch(receiveCurrentUser(null)))
   )
+);
+
+export const clearErrors = () => dispatch => (
+  dispatch(receiveErrors([]))
 );
