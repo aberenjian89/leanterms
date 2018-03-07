@@ -32,7 +32,8 @@ const signup = (req,res,next) =>{
         }
     }).then(function (user) {
         if (user){
-            return res.status(400).send("username has been taken, please try a different one");
+            errors.unshift("username has been taken, please try a different one");
+            return res.status(400).send(errors);
         }else{
             bcrypt.hash(password,10,(err,hash)=>{
                 const user = new User({

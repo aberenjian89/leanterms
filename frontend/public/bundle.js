@@ -28982,7 +28982,9 @@ var Navbar = function (_React$Component) {
           password: this.state.password
         };
         return this.props.loginUser(user1).then(function (response) {
-          return _this4.props.history.push('./profile');
+          return function (user) {
+            return _this4.props.history.push('./profile');
+          };
         });
       }
     }

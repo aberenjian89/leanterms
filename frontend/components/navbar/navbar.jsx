@@ -64,7 +64,7 @@ class Navbar extends React.Component {
         password: this.state.password
       };
       return this.props.loginUser(user1).then(response => {
-        return this.props.history.push('./profile');
+        return user => this.props.history.push('./profile');
       });
     }
   }
