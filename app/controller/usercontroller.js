@@ -107,9 +107,29 @@ const logout = (req,res,next) =>{
 };
 
 
-const currentUser = (req,res,next)=>{
-
+const currentUser = (req,res,next)=> {
+    if (req.cookies['leanterms']===undefined){
+        return res.status(200).send(null)
+    }
+    User.findOne({
+        where: {
+            session_token: req.cookies['leanterms']
+        }
+    }).then(function (user) {
+        if (user) {
+            return res.status(200).send({
+                id: user.id,
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email
+            })
+        }
+    }).catch(function (err) {
+        return res.status(400).send(err.message)
+    });
 };
+
 
 
 
