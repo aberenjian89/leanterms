@@ -53,14 +53,16 @@ const signup = (req,res,next) =>{
 
 
 const login = (req,res,next) =>{
+
     User.findOne({
         where:{
             username: req.body.username,
         }
     }).then(function (user) {
 
-        const hash = user.username ;
+        const hash = user.password_digest ;
         bcrypt.compare(req.body.password,hash,function (err,response) {
+           console.log(response)
            if (response === true){
                res.cookie('leanterms',user.session_token);
                return res.status(200).send({
