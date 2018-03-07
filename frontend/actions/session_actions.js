@@ -1,11 +1,11 @@
-import * as SessionAPI from './utils/session_utils';
+import * as SessionAPI from '../utils/session_utils';
 
-export const RECEIEVE_CURRENT_USER = 'RECEIEVE_CURRENT_USER';
+export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 
 
 export const receiveCurrentUser = currentUser => ({
-  type: RECEIEVE_CURRENT_USER,
+  type: RECEIVE_CURRENT_USER,
   currentUser
 });
 
