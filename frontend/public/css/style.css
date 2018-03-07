@@ -949,7 +949,7 @@ hr {
 }
 
 .app-div-wrapper {
-  height: fit-content;
+  height: 100%;
 }
 
 #bar {

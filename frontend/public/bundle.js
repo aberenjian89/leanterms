@@ -25586,9 +25586,9 @@ var _navbar_container = __webpack_require__(117);
 
 var _navbar_container2 = _interopRequireDefault(_navbar_container);
 
-var _navbar = __webpack_require__(118);
+var _splash = __webpack_require__(119);
 
-var _navbar2 = _interopRequireDefault(_navbar);
+var _splash2 = _interopRequireDefault(_splash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25613,10 +25613,11 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'app-div-wrapper' },
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _navbar_container2.default }),
         _react2.default.createElement(
-          'div',
+          _reactRouterDom.Switch,
           null,
-          _react2.default.createElement(_navbar_container2.default, null)
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _splash2.default })
         )
       );
     }
@@ -26023,6 +26024,101 @@ var Navbar = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Navbar;
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(40);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Splash = function (_React$Component) {
+  _inherits(Splash, _React$Component);
+
+  function Splash(props) {
+    _classCallCheck(this, Splash);
+
+    return _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this, props));
+  }
+
+  _createClass(Splash, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'homepage-wrap0' },
+        _react2.default.createElement(
+          'div',
+          { className: 'homepage-wrap' },
+          _react2.default.createElement(
+            'ul',
+            { className: 'homepage-intro' },
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'h1',
+                { className: 'welcome-page-message' },
+                'Lease Contracts'
+              ),
+              _react2.default.createElement(
+                'h2',
+                { id: 'redefined', className: 'welcome-page-message' },
+                'Redefined'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'p',
+                null,
+                'Create, share, and sign a free customized lease contract in minutes.'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'homepage-link-wrapper' },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              {
+                style: { textDecoration: 'none' },
+                className: 'start-contract-button',
+                id: 'start-contract-button',
+                to: '/contract' },
+              'Start Drafting Your Contract Now'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Splash;
+}(_react2.default.Component);
+
+exports.default = Splash;
 
 /***/ })
 /******/ ]);

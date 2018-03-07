@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
 import NavbarContainter from './navbar/navbar_container';
-import NavBar from './navbar/navbar';
+import Splash from './homepage/splash';
 
 
 class App extends React.Component {
@@ -13,9 +13,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-div-wrapper">
-        <div>
-          <NavbarContainter/>
-        </div>
+          <Route path="/" component={NavbarContainter}/>
+          <Switch>
+            <Route exact path="/" component={Splash} />
+
+          </Switch>
       </div>
     );
   }
