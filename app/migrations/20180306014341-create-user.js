@@ -28,15 +28,27 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        validate:{
+            notEmpty: true,
+            len: 4
+        },
       },
       password_digest: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        validate:{
+            notEmpty: true,
+            len: 8
+        },
       },
       session_token: {
+        allowNull: true,
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        validate:{
+            notEmpty: true
+        }
       },
       createdAt: {
         allowNull: true,

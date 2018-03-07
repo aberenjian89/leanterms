@@ -1,9 +1,30 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
-    username: DataTypes.STRING,
-    password_digest: DataTypes.STRING,
-    session_token: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      unique: true,
+      validate:{
+        notEmpty: true,
+        len: 4
+      },
+    },
+    password_digest: {
+      type: DataTypes.STRING,
+      unique: true,
+      validate:{
+          notEmpty: true,
+          len: 8
+      }
+    },
+    session_token: {
+      allowNull: true,
+      type: DataTypes.STRING,
+      unique: true,
+      validate:{
+          notEmpty: true
+      }
+    },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     city: DataTypes.STRING,
