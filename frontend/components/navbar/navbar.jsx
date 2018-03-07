@@ -4,52 +4,27 @@ import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '', email: '' };
-    this.changeDisplay = this.changeDisplay.bind(this);
-    this.switchToLogIn = this.switchToLogIn.bind(this);
-    this.switchToSignUp = this.switchToSignUp.bind(this);
+    this.state = { username: '', password: '', email: '', currentForm: ''};
+    this.switchDisplay = this.switchDisplay.bind(this);
+    this.switchForm = this.switchForm.bind(this);
     this.update = this.update.bind(this);
     this.handlesubmitlogout = this.handlesubmitlogout.bind(this);
-    this.handlesubmitnewuser = this.handlesubmitnewuser.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
-  changeDisplay(id) {
+  switchDisplay(formType) {
+    this.setState({currentForm: formType});
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
     );
     for (let i = 0; i < allErrors.length; i++) {
       allErrors[i].textContent = '';
     }
-    if (document.getElementById(id)) {
-      if (document.getElementById(id).style.display === 'flex') {
-        document.getElementById(id).style.display = 'none';
-      } else {
-        document.getElementById(id).style.display = 'flex';
-      }
-    }
+    document.getElementById('id01').style.display = 'flex';
   }
 
   update(type) {
     return e => this.setState({ [type]: e.target.value });
-  }
-
-  handlesubmitlogin(e) {
-    e.preventDefault();
-    let allErrors = Array.prototype.slice.call(
-      document.querySelectorAll('.single-session-error')
-    );
-    for (let i = 0; i < allErrors.length; i++) {
-      allErrors[i].textContent = '';
-    }
-
-    let user1 = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    return this.props.loginuser(user1).then(response => {
-      this.setState({ username: '', password: '' });
-      return this.props.history.push('./profile');
-    });
   }
 
   handlesubmitlogout(e) {
@@ -59,7 +34,7 @@ class Navbar extends React.Component {
     });
   }
 
-  handlesubmitnewuser(e) {
+  handleSubmitForm(e) {
     e.preventDefault();
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
@@ -67,39 +42,36 @@ class Navbar extends React.Component {
     for (let i = 0; i < allErrors.length; i++) {
       allErrors[i].textContent = '';
     }
-    return this.props.createuser(this.state).then(response => {
-      this.setState({ username: '', password: '', email: '' });
-      return user => this.props.history.push('./profile');
-    });
+    if (this.state.currentForm === 'Sign Up') {
+      return this.props.createuser(this.state).then(response => {
+        this.setState({ username: '', password: '', email: '' });
+        return user => this.props.history.push('./profile');
+      });
+    } else {
+      let user1 = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      return this.props.loginuser(user1).then(response => {
+        this.setState({ username: '', password: '' });
+        return this.props.history.push('./profile');
+      });
+    }
   }
 
-  switchToSignUp() {
+  switchForm() {
+    let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
     );
     for (let i = 0; i < allErrors.length; i++) {
       allErrors[i].textContent = '';
     }
-    if (document.getElementById('id02')) {
-      document.getElementById('id02').style.display = 'none';
-      document.getElementById('id01').style.display = 'flex';
-    }
-  }
-
-  switchToLogIn() {
-    let allErrors = Array.prototype.slice.call(
-      document.querySelectorAll('.single-session-error')
-    );
-    for (let i = 0; i < allErrors.length; i++) {
-      allErrors[i].textContent = '';
-    }
-    if (document.getElementById('id01')) {
-      document.getElementById('id01').style.display = 'none';
-      document.getElementById('id02').style.display = 'flex';
-    }
+    this.switchDisplay(alternative);
   }
 
   render() {
+    let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let display;
     if (
       this.props.currentUser &&
@@ -134,7 +106,7 @@ class Navbar extends React.Component {
             <button
               id="login-effects"
               className="cd-signup"
-              onClick={() => this.changeDisplay('id02')}
+              onClick={() => this.switchDisplay('Log In')}
             >
               Log In
             </button>
@@ -142,7 +114,7 @@ class Navbar extends React.Component {
             <button
               id="nav-bar-signup"
               className="cd-signup"
-              onClick={() => this.changeDisplay('id01')}
+              onClick={() => this.switchDisplay('Sign Up')}
             >
               Sign Up
             </button>
@@ -152,13 +124,13 @@ class Navbar extends React.Component {
             <form className="modal-content">
               <div className="container">
                 <span
-                  onClick={() => this.changeDisplay('id01')}
+                  onClick={() => (document.getElementById('id01').style.display = 'none')}
                   className="close"
                   title="Close Modal"
                 >
                   X
                 </span>
-                <h1>Sign Up</h1>
+                <h1 id="formType">{this.state.currentForm}</h1>
                 <hr />
                 <ul className="session-errors">
                   {this.props.errors
@@ -180,17 +152,20 @@ class Navbar extends React.Component {
                   onChange={this.update('username')}
                   required
                 />
-
-                <label>
-                  <b>Email</b>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Email"
-                  name="psw"
-                  onChange={this.update('email')}
-                  required
-                />
+              { this.state.currentForm === 'Sign Up' &&
+                <div>
+                  <label>
+                    <b>Email</b>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Email"
+                    name="psw"
+                    onChange={this.update('email')}
+                    required
+                  />
+                </div>
+                }
 
                 <label>
                   <b>Password</b>
@@ -207,13 +182,13 @@ class Navbar extends React.Component {
                   <button
                     type="submit"
                     className="signup"
-                    onClick={e => this.handlesubmitnewuser(e)}
+                    onClick={e => this.handleSubmitForm(e)}
                   >
-                    Sign Up
+                    {this.state.currentForm}
                   </button>
                   <button
                     type="button"
-                    onClick={() => this.changeDisplay('id01')}
+                    onClick={() => (document.getElementById('id01').style.display = 'none')}
                     className="cancelbtn"
                   >
                     Cancel
@@ -226,94 +201,17 @@ class Navbar extends React.Component {
                   </button>
 
                   <p className="alternative-option">
-                    Already have an account?{' '}
+                    {this.state.currentForm === 'Sign Up' && 'Already have an account?'
+                        ||
+                      this.state.currentForm === 'Log In' && "Don't have an account?"
+                    }
                     <a
                       id="log-in-instead"
                       href="#"
-                      onClick={this.switchToLogIn}
+                      onClick={this.switchForm}
                       style={{ color: '#c24e04d4' }}
                     >
-                      Log In
-                    </a>.
-                  </p>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div id="id02" className="modal">
-            <form className="modal-content">
-              <div className="container">
-                <span
-                  onClick={() => this.changeDisplay('id02')}
-                  className="close"
-                  title="Close Modal"
-                >
-                  X
-                </span>
-                <h1>Log In</h1>
-                <hr />
-                <ul className="session-errors">
-                  {this.props.errors
-                    ? this.props.errors.map((error, i) => (
-                        <li className="single-session-error" key={i}>
-                          {error}
-                        </li>
-                      ))
-                    : null}
-                </ul>
-                <label>
-                  <b>Username</b>
-                </label>
-                <input
-                  autoFocus
-                  type="text"
-                  placeholder="Enter Username"
-                  onChange={this.update('username')}
-                  required
-                />
-
-                <label>
-                  <b>Password</b>
-                </label>
-                <input
-                  type="password"
-                  placeholder="Enter Password"
-                  required
-                  onChange={this.update('password')}
-                />
-
-                <div className="clearfix">
-                  <button
-                    type="submit"
-                    className="signup"
-                    onClick={e => this.handlesubmitlogin(e)}
-                  >
-                    Log In
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => this.changeDisplay('id02')}
-                    className="cancelbtn"
-                  >
-                    Cancel
-                  </button>
-                </div>
-
-                <div className="form-last-line">
-                  <button type="button" className="demobtn">
-                    Demo
-                  </button>
-
-                  <p className="alternative-option">
-                    Don't have an account?{' '}
-                    <a
-                      id="sign-up-instead"
-                      href="#"
-                      onClick={this.switchToSignUp}
-                      style={{ color: '#c24e04d4' }}
-                    >
-                      Sign Up
+                      {alternative}
                     </a>.
                   </p>
                 </div>

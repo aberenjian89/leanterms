@@ -25695,30 +25695,24 @@ var Navbar = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this, props));
 
-    _this.state = { username: '', password: '', email: '' };
-    _this.changeDisplay = _this.changeDisplay.bind(_this);
-    _this.switchToLogIn = _this.switchToLogIn.bind(_this);
-    _this.switchToSignUp = _this.switchToSignUp.bind(_this);
+    _this.state = { username: '', password: '', email: '', currentForm: '' };
+    _this.switchDisplay = _this.switchDisplay.bind(_this);
+    _this.switchForm = _this.switchForm.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.handlesubmitlogout = _this.handlesubmitlogout.bind(_this);
-    _this.handlesubmitnewuser = _this.handlesubmitnewuser.bind(_this);
+    _this.handleSubmitForm = _this.handleSubmitForm.bind(_this);
     return _this;
   }
 
   _createClass(Navbar, [{
-    key: 'changeDisplay',
-    value: function changeDisplay(id) {
+    key: 'switchDisplay',
+    value: function switchDisplay(formType) {
+      this.setState({ currentForm: formType });
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
       for (var i = 0; i < allErrors.length; i++) {
         allErrors[i].textContent = '';
       }
-      if (document.getElementById(id)) {
-        if (document.getElementById(id).style.display === 'flex') {
-          document.getElementById(id).style.display = 'none';
-        } else {
-          document.getElementById(id).style.display = 'flex';
-        }
-      }
+      document.getElementById('id01').style.display = 'flex';
     }
   }, {
     key: 'update',
@@ -25730,81 +25724,59 @@ var Navbar = function (_React$Component) {
       };
     }
   }, {
-    key: 'handlesubmitlogin',
-    value: function handlesubmitlogin(e) {
+    key: 'handlesubmitlogout',
+    value: function handlesubmitlogout(e) {
       var _this3 = this;
 
       e.preventDefault();
-      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
-      for (var i = 0; i < allErrors.length; i++) {
-        allErrors[i].textContent = '';
-      }
-
-      var user1 = {
-        username: this.state.username,
-        password: this.state.password
-      };
-      return this.props.loginuser(user1).then(function (response) {
-        _this3.setState({ username: '', password: '' });
-        return _this3.props.history.push('./profile');
+      return this.props.logoutuser().then(function (user) {
+        return _this3.props.history.push('./home');
       });
     }
   }, {
-    key: 'handlesubmitlogout',
-    value: function handlesubmitlogout(e) {
+    key: 'handleSubmitForm',
+    value: function handleSubmitForm(e) {
       var _this4 = this;
 
       e.preventDefault();
-      return this.props.logoutuser().then(function (user) {
-        return _this4.props.history.push('./home');
-      });
-    }
-  }, {
-    key: 'handlesubmitnewuser',
-    value: function handlesubmitnewuser(e) {
-      var _this5 = this;
-
-      e.preventDefault();
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
       for (var i = 0; i < allErrors.length; i++) {
         allErrors[i].textContent = '';
       }
-      return this.props.createuser(this.state).then(function (response) {
-        _this5.setState({ username: '', password: '', email: '' });
-        return function (user) {
-          return _this5.props.history.push('./profile');
+      if (this.state.currentForm === 'Sign Up') {
+        return this.props.createuser(this.state).then(function (response) {
+          _this4.setState({ username: '', password: '', email: '' });
+          return function (user) {
+            return _this4.props.history.push('./profile');
+          };
+        });
+      } else {
+        var user1 = {
+          username: this.state.username,
+          password: this.state.password
         };
-      });
+        return this.props.loginuser(user1).then(function (response) {
+          _this4.setState({ username: '', password: '' });
+          return _this4.props.history.push('./profile');
+        });
+      }
     }
   }, {
-    key: 'switchToSignUp',
-    value: function switchToSignUp() {
+    key: 'switchForm',
+    value: function switchForm() {
+      var alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
       for (var i = 0; i < allErrors.length; i++) {
         allErrors[i].textContent = '';
       }
-      if (document.getElementById('id02')) {
-        document.getElementById('id02').style.display = 'none';
-        document.getElementById('id01').style.display = 'flex';
-      }
-    }
-  }, {
-    key: 'switchToLogIn',
-    value: function switchToLogIn() {
-      var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
-      for (var i = 0; i < allErrors.length; i++) {
-        allErrors[i].textContent = '';
-      }
-      if (document.getElementById('id01')) {
-        document.getElementById('id01').style.display = 'none';
-        document.getElementById('id02').style.display = 'flex';
-      }
+      this.switchDisplay(alternative);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
+      var alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
       var display = void 0;
       if (this.props.currentUser && Object.keys(this.props.currentUser).length > 0) {
         display = _react2.default.createElement(
@@ -25826,7 +25798,7 @@ var Navbar = function (_React$Component) {
             {
               className: 'logout-button',
               onClick: function onClick(e) {
-                return _this6.handlesubmitlogout(e);
+                return _this5.handlesubmitlogout(e);
               }
             },
             'Logout'
@@ -25850,7 +25822,7 @@ var Navbar = function (_React$Component) {
                 id: 'login-effects',
                 className: 'cd-signup',
                 onClick: function onClick() {
-                  return _this6.changeDisplay('id02');
+                  return _this5.switchDisplay('Log In');
                 }
               },
               'Log In'
@@ -25861,7 +25833,7 @@ var Navbar = function (_React$Component) {
                 id: 'nav-bar-signup',
                 className: 'cd-signup',
                 onClick: function onClick() {
-                  return _this6.changeDisplay('id01');
+                  return _this5.switchDisplay('Sign Up');
                 }
               },
               'Sign Up'
@@ -25880,7 +25852,7 @@ var Navbar = function (_React$Component) {
                   'span',
                   {
                     onClick: function onClick() {
-                      return _this6.changeDisplay('id01');
+                      return document.getElementById('id01').style.display = 'none';
                     },
                     className: 'close',
                     title: 'Close Modal'
@@ -25889,8 +25861,8 @@ var Navbar = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'h1',
-                  null,
-                  'Sign Up'
+                  { id: 'formType' },
+                  this.state.currentForm
                 ),
                 _react2.default.createElement('hr', null),
                 _react2.default.createElement(
@@ -25921,22 +25893,26 @@ var Navbar = function (_React$Component) {
                   onChange: this.update('username'),
                   required: true
                 }),
-                _react2.default.createElement(
-                  'label',
+                this.state.currentForm === 'Sign Up' && _react2.default.createElement(
+                  'div',
                   null,
                   _react2.default.createElement(
-                    'b',
+                    'label',
                     null,
-                    'Email'
-                  )
+                    _react2.default.createElement(
+                      'b',
+                      null,
+                      'Email'
+                    )
+                  ),
+                  _react2.default.createElement('input', {
+                    type: 'text',
+                    placeholder: 'Enter Email',
+                    name: 'psw',
+                    onChange: this.update('email'),
+                    required: true
+                  })
                 ),
-                _react2.default.createElement('input', {
-                  type: 'text',
-                  placeholder: 'Enter Email',
-                  name: 'psw',
-                  onChange: this.update('email'),
-                  required: true
-                }),
                 _react2.default.createElement(
                   'label',
                   null,
@@ -25962,17 +25938,17 @@ var Navbar = function (_React$Component) {
                       type: 'submit',
                       className: 'signup',
                       onClick: function onClick(e) {
-                        return _this6.handlesubmitnewuser(e);
+                        return _this5.handleSubmitForm(e);
                       }
                     },
-                    'Sign Up'
+                    this.state.currentForm
                   ),
                   _react2.default.createElement(
                     'button',
                     {
                       type: 'button',
                       onClick: function onClick() {
-                        return _this6.changeDisplay('id01');
+                        return document.getElementById('id01').style.display = 'none';
                       },
                       className: 'cancelbtn'
                     },
@@ -25990,140 +25966,16 @@ var Navbar = function (_React$Component) {
                   _react2.default.createElement(
                     'p',
                     { className: 'alternative-option' },
-                    'Already have an account?',
-                    ' ',
+                    this.state.currentForm === 'Sign Up' && 'Already have an account?' || this.state.currentForm === 'Log In' && "Don't have an account?",
                     _react2.default.createElement(
                       'a',
                       {
                         id: 'log-in-instead',
                         href: '#',
-                        onClick: this.switchToLogIn,
+                        onClick: this.switchForm,
                         style: { color: '#c24e04d4' }
                       },
-                      'Log In'
-                    ),
-                    '.'
-                  )
-                )
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { id: 'id02', className: 'modal' },
-            _react2.default.createElement(
-              'form',
-              { className: 'modal-content' },
-              _react2.default.createElement(
-                'div',
-                { className: 'container' },
-                _react2.default.createElement(
-                  'span',
-                  {
-                    onClick: function onClick() {
-                      return _this6.changeDisplay('id02');
-                    },
-                    className: 'close',
-                    title: 'Close Modal'
-                  },
-                  'X'
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'Log In'
-                ),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(
-                  'ul',
-                  { className: 'session-errors' },
-                  this.props.errors ? this.props.errors.map(function (error, i) {
-                    return _react2.default.createElement(
-                      'li',
-                      { className: 'single-session-error', key: i },
-                      error
-                    );
-                  }) : null
-                ),
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  _react2.default.createElement(
-                    'b',
-                    null,
-                    'Username'
-                  )
-                ),
-                _react2.default.createElement('input', {
-                  autoFocus: true,
-                  type: 'text',
-                  placeholder: 'Enter Username',
-                  onChange: this.update('username'),
-                  required: true
-                }),
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  _react2.default.createElement(
-                    'b',
-                    null,
-                    'Password'
-                  )
-                ),
-                _react2.default.createElement('input', {
-                  type: 'password',
-                  placeholder: 'Enter Password',
-                  required: true,
-                  onChange: this.update('password')
-                }),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'clearfix' },
-                  _react2.default.createElement(
-                    'button',
-                    {
-                      type: 'submit',
-                      className: 'signup',
-                      onClick: function onClick(e) {
-                        return _this6.handlesubmitlogin(e);
-                      }
-                    },
-                    'Log In'
-                  ),
-                  _react2.default.createElement(
-                    'button',
-                    {
-                      type: 'button',
-                      onClick: function onClick() {
-                        return _this6.changeDisplay('id02');
-                      },
-                      className: 'cancelbtn'
-                    },
-                    'Cancel'
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'form-last-line' },
-                  _react2.default.createElement(
-                    'button',
-                    { type: 'button', className: 'demobtn' },
-                    'Demo'
-                  ),
-                  _react2.default.createElement(
-                    'p',
-                    { className: 'alternative-option' },
-                    'Don\'t have an account?',
-                    ' ',
-                    _react2.default.createElement(
-                      'a',
-                      {
-                        id: 'sign-up-instead',
-                        href: '#',
-                        onClick: this.switchToSignUp,
-                        style: { color: '#c24e04d4' }
-                      },
-                      'Sign Up'
+                      alternative
                     ),
                     '.'
                   )
