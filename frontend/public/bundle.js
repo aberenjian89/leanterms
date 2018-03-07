@@ -28923,6 +28923,15 @@ var Navbar = function (_React$Component) {
   _createClass(Navbar, [{
     key: 'switchDisplay',
     value: function switchDisplay(formType) {
+      if (document.getElementById('username')) {
+        document.getElementById('username').value = '';
+      }
+      if (document.getElementById('email')) {
+        document.getElementById('email').value = '';
+      }
+      if (document.getElementById('password')) {
+        document.getElementById('password').value = '';
+      }
       this.setState({ username: '', password: '', email: '' });
       this.setState({ currentForm: formType });
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
@@ -28957,14 +28966,12 @@ var Navbar = function (_React$Component) {
 
       this.renderErrors();
       e.preventDefault();
-      this.setState({ username: '', password: '', email: '' });
       var allErrors = Array.prototype.slice.call(document.querySelectorAll('.single-session-error'));
       for (var i = 0; i < allErrors.length; i++) {
         allErrors[i].textContent = '';
       }
       if (this.state.currentForm === 'Sign Up') {
         return this.props.createUser(this.state).then(function (response) {
-          _this4.setState({ username: '', password: '', email: '' });
           return function (user) {
             return _this4.props.history.push('./profile');
           };
@@ -28975,7 +28982,6 @@ var Navbar = function (_React$Component) {
           password: this.state.password
         };
         return this.props.loginUser(user1).then(function (response) {
-          _this4.setState({ username: '', password: '' });
           return _this4.props.history.push('./profile');
         });
       }
@@ -28992,24 +28998,8 @@ var Navbar = function (_React$Component) {
       this.switchDisplay(alternative);
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.props.clearErrors();
-    }
-  }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.props.clearErrors();
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.props.clearErrors();
-    }
-  }, {
     key: 'renderErrors',
     value: function renderErrors() {
-      this.props.clearErrors();
       return _react2.default.createElement(
         'ul',
         { className: 'session-errors' },
@@ -29131,6 +29121,7 @@ var Navbar = function (_React$Component) {
                   )
                 ),
                 _react2.default.createElement('input', {
+                  id: 'username',
                   autoFocus: true,
                   type: 'text',
                   placeholder: 'Enter Username',
@@ -29151,6 +29142,7 @@ var Navbar = function (_React$Component) {
                     )
                   ),
                   _react2.default.createElement('input', {
+                    id: 'email',
                     type: 'text',
                     placeholder: 'Enter Email',
                     name: 'psw',
@@ -29168,6 +29160,7 @@ var Navbar = function (_React$Component) {
                   )
                 ),
                 _react2.default.createElement('input', {
+                  id: 'password',
                   type: 'password',
                   placeholder: 'Enter Password',
                   name: 'psw-repeat',

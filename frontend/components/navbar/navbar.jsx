@@ -20,6 +20,9 @@ class Navbar extends React.Component {
   }
 
   switchDisplay(formType) {
+    if (document.getElementById('username')){document.getElementById('username').value = '';}
+    if (document.getElementById('email')){document.getElementById('email').value = '';}
+    if (document.getElementById('password')){document.getElementById('password').value = '';}
     this.setState({ username: '', password: '', email: '' });
     this.setState({currentForm: formType});
     let allErrors = Array.prototype.slice.call(
@@ -45,7 +48,6 @@ class Navbar extends React.Component {
   handleSubmitForm(e) {
     this.renderErrors();
     e.preventDefault();
-    this.setState({ username: '', password: '', email: '' });
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')
     );
@@ -54,7 +56,6 @@ class Navbar extends React.Component {
     }
     if (this.state.currentForm === 'Sign Up') {
       return this.props.createUser(this.state).then(response => {
-        this.setState({ username: '', password: '', email: '' });
         return user => this.props.history.push('./profile');
       });
     } else {
@@ -63,7 +64,6 @@ class Navbar extends React.Component {
         password: this.state.password
       };
       return this.props.loginUser(user1).then(response => {
-        this.setState({ username: '', password: '' });
         return this.props.history.push('./profile');
       });
     }
@@ -81,20 +81,7 @@ class Navbar extends React.Component {
     this.switchDisplay(alternative);
   }
 
-  componentWillUnmount() {
-    this.props.clearErrors();
-  }
-
-  componentWillMount(){
-    this.props.clearErrors();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.props.clearErrors();
-  }
-
   renderErrors() {
-    this.props.clearErrors();
       return(
         <ul className="session-errors">
           {this.props.errors.map((error, i) => (
@@ -174,6 +161,7 @@ class Navbar extends React.Component {
                   <b>Username</b>
                 </label>
                 <input
+                  id="username"
                   autoFocus
                   type="text"
                   placeholder="Enter Username"
@@ -187,6 +175,7 @@ class Navbar extends React.Component {
                     <b>Email</b>
                   </label>
                   <input
+                    id="email"
                     type="text"
                     placeholder="Enter Email"
                     name="psw"
@@ -200,6 +189,7 @@ class Navbar extends React.Component {
                   <b>Password</b>
                 </label>
                 <input
+                  id="password"
                   type="password"
                   placeholder="Enter Password"
                   name="psw-repeat"
