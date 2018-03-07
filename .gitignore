@@ -1,3 +1,4 @@
 /node_modules
 /.idea
+/frontend/public/bundle.*
 /public/bundle.*
