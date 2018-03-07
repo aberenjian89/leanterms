@@ -11,7 +11,6 @@ const signup = (req,res,next) =>{
     const password = req.body.password;
     const email = req.body.email;
     const session_token = crypto.randomBytes(32).toString('hex');
-    console.log(password.length);
     if (username.length < 4 ) {
         errors.unshift("Username should have at least 4 characters");
     }
@@ -68,7 +67,6 @@ const login = (req,res,next) =>{
 
         const hash = user.password_digest ;
         bcrypt.compare(req.body.password,hash,function (err,response) {
-           console.log(response)
            if (response === true){
                res.cookie('leanterms',user.session_token);
                return res.status(200).send({

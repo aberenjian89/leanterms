@@ -71,6 +71,7 @@ class Navbar extends React.Component {
 
   switchForm() {
     this.setState({ username: '', password: '', email: '' });
+    this.props.clearErrors();
     let alternative = this.state.currentForm === 'Sign Up' ? 'Log In' : 'Sign Up';
     let allErrors = Array.prototype.slice.call(
       document.querySelectorAll('.single-session-error')

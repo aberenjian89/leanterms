@@ -10,7 +10,7 @@ import {
 
 const mapStateToProps = state => ({
   currentUser: state.session.currentUser,
-  errors: state.sessionErrors
+  errors: state.errors.session
 });
 
 
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   loginUser: user => dispatch(login(user)),
   logoutUser: () => dispatch(logout()),
   createUser: user => dispatch(signup(user)),
-  clearErrors: () => dispatch(clearErrors)
+  clearErrors: () => dispatch(clearErrors())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Navbar));
