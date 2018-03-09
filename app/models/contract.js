@@ -109,37 +109,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    tAddress: {
-      type: DataTypes.STRING,
-      validate:{
-        notEmpty: true,
-      }
-    },
-    tAddress2: {
-      type: DataTypes.STRING,
-      validate:{
-        notEmpty: true,
-      }
-    },
-    tState: {
-      type: DataTypes.STRING,
-      validate:{
-        notEmpty: true,
-      }
-    },
-    tZip: {
-      type: DataTypes.INTEGER,
-      validate:{
-        notEmpty: true,
-      }
-    },
-    lId: {
-      type: DataTypes.INTEGER,
-      validate:{
-        notEmpty: true,
-      }
-    },
-    tId: {
+    contractOwnerId: {
       type: DataTypes.INTEGER,
       validate:{
         notEmpty: true,
@@ -220,12 +190,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate:{
         notEmpty: true,
-      }
-    },
-    contractOwner: {
-      type: DataTypes.INTEGER,
-    validate:{
-      notEmpty: true,
       }
     }
   });
