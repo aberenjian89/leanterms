@@ -16,11 +16,7 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": null,
-    "password": null,
-    "database": "DATABASE_URL",
-    "host": "localhost",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "use_env_variable": "POSTGRES_DB_URL",
+    "dialect": "postgres"
   }
 }
