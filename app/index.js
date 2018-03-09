@@ -10,23 +10,23 @@ const authRouter = require('./routes/auth_routes');
 const contractRouter = require('./routes/contract_routes');
 
 
-// const sequelize = new Sequelize('leanterms','','',{
-//    host: 'localhost',
-//    dialect: 'postgres',
-//     operatorsAliases: false,
-//     pool:{
-//        max: 5,
-//        min: 0,
-//        acquire: 30000,
-//        idle: 10000
-//    }
-// });
-// // Testing Connection For Database
-// sequelize.authenticate().then(() =>{
-//     console.log('Connection has been established successfully.');
-// }).catch(err =>{
-//     console.error('Unable to Connect to the database:',err);
-// });
+const sequelize = new Sequelize('leanterms','','',{
+   host: 'DATABASE_URL',
+   dialect: 'postgres',
+    operatorsAliases: false,
+    pool:{
+       max: 5,
+       min: 0,
+       acquire: 30000,
+       idle: 10000
+   }
+});
+// Testing Connection For Database
+sequelize.authenticate().then(() =>{
+    console.log('Connection has been established successfully.');
+}).catch(err =>{
+    console.error('Unable to Connect to the database:',err);
+});
 
 const app = express();
 
