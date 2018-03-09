@@ -5,7 +5,6 @@ const path = require('path');
 const cookieparser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
-const models = require('../app/models/index');
 const PdfGenerate = require('./routes/generatepdfroute');
 const authRouter = require('./routes/auth_routes');
 const contractRouter = require('./routes/contract_routes');
@@ -48,13 +47,8 @@ app.get('/', function(req, res) {
 
 let port = process.env.port || 5000;
 
-// app.listen(port,function(err){
-//     console.log("Running Server on port",port);
-// });
-
-
-models.sequelize.sync().then(function () {
-    app.listen(port,function(err){
-        console.log("Running Server on port",port);
-    });
+app.listen(port,function(err){
+    console.log("Running Server on port",port);
 });
+
+
