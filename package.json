@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/aberenjian89/leanterms.git"
   },
+  "engines": {
+    "node":"6.10.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

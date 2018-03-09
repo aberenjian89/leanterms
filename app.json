@@ -1,0 +1,9 @@
+{
+  "name": "LeanTerms",
+  "description": "",
+  "repository" : "https://github.com/aberenjian89/leanterms",
+  "logo": "",
+  "keywords": ["node","express","static"],
+  "image": "heroku/nodejs"
+
+}
