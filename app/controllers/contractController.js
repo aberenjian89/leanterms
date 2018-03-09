@@ -206,13 +206,54 @@ const createContract = (req,res,next) => {
 };
 
 const updateContract = (req,res,next) => {
-  
+  const contractId = req.body.contractId;
+  Contract.findOne({
+    where:{
+      id: contractId
+    }
+  }).then(function(contract) {
+    contract.lFullTime = req.body.lFullTime;
+    contract.tFullName = req.body.tFullName;
+    contract.leaseType = req.body.leaseType;
+    contract.effectiveDate = req.body.effectiveDate;
+    contract.vacateNotice = req.body.vacateNotice;
+    contract.pType = req.body.pType;
+    contract.pAddress = req.body.pAddress;
+    contract.pAddress2 = req.body.pAddress2;
+    contract.pCity = req.body.pCity;
+    contract.pState = req.body.pState;
+    contract.pZip = req.body.pZip;
+    contract.furnished = req.body.furnished;
+    contract.parking = req.body.parking;
+    contract.lAddress = req.body.lAddress;
+    contract.lAddress2 = req.body.lAddress2;
+    contract.lCity = req.body.lCity;
+    contract.lState = req.body.lState;
+    contract.lZip = req.body.lZip;
+    contract.contractOwnerId = req.body.contractOwnerId;
+    contract.rentAmount = req.body.rentAmount;
+    contract.rentDueDate = req.body.rentDueDate;
+    contract.paymentMethod = req.body.paymentMethod;
+    contract.depositRequired = req.body.depositRequired;
+    contract.depositAmount = req.body.depositAmount;
+    contract.depositDueDate = req.body.depositDueDate;
+    contract.flmRequirement = req.body.flmRequirement;
+    contract.lateFeeRequirement = req.body.lateFeeRequirement;
+    contract.lateFeeAmount = req.body.lateFeeAmount;
+    contract.utilities = req.body.utilities;
+    contract.petsAllowed = req.body.petsAllowed;
+    contract.subletAllowed = req.body.subletAllowed;
+    contract.signingDate = req.body.signingDate;
+  }
+);
 };
 
 const deleteContract = (req,res,next) => {
+
 };
 
 const findUserContracts = (req,res,next) => {
+
 };
 
 module.exports = {
