@@ -1,24 +1,24 @@
 {
   "development": {
-    "username": "",
-    "password": "",
+    "username": null,
+    "password": null,
     "database": "leanterms",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": false
   },
   "test": {
-    "username": "",
-    "password": "",
+    "username": null,
+    "password": null,
     "database": "leanterms",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": false
   },
   "production": {
-    "username": "",
-    "password": "",
-    "database": "leanterms",
+    "username": null,
+    "password": null,
+    "database": "DATABASE_URL",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": false
