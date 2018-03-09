@@ -16,7 +16,10 @@
     "operatorsAliases": false
   },
   "production": {
-    "use_env_variable": "POSTGRES_DB_URL",
-    "dialect": "postgres"
+    "username": null,
+    "password": null,
+    "database": "postgresql-triangular-62876",
+    "dialect": "postgres",
+    "operatorsAliases": false
   }
 }
