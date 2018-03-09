@@ -23,13 +23,10 @@ const sequelize = new Sequelize('leanterms','','',{
 sequelize.authenticate().then(() =>{
     console.log('Connection has been established successfully.');
 }).catch(err =>{
-    console.error('Unable to Connect to the database:',err)
+    console.error('Unable to Connect to the database:',err);
 });
 
 const app = express();
-
-
-
 
 app.use(express.static('frontend/public'));
 app.use(bodyparser.json());
@@ -38,9 +35,6 @@ app.use(cookieparser());
 
 app.use(authrouter);
 
-
-
-
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../','index.html'));
 });
@@ -48,5 +42,5 @@ app.get('/', function(req, res) {
 let port = process.env.port || 5000;
 
 app.listen(port,function(err){
-    console.log("Running Server on port",port)
+    console.log("Running Server on port",port);
 });
