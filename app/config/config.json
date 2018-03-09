@@ -16,6 +16,8 @@
     "operatorsAliases": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL",
+    "host": "postgresql-triangular-62876.herokuapp.com"
+    "dialect":"postgres"
   }
 }

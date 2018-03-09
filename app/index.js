@@ -11,7 +11,7 @@ const contractRouter = require('./routes/contract_routes');
 
 
 const sequelize = new Sequelize('leanterms','','',{
-   host: 'DATABASE_URL',
+   host: 'localhost',
    dialect: 'postgres',
     operatorsAliases: false,
     pool:{
