@@ -6,7 +6,6 @@ import logger from 'redux-logger';
 
 
 const configureStore=(preloadedstate={})=> {
-    debugger
     return createStore(
         RootReducer,
         preloadedstate,

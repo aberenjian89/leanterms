@@ -6,6 +6,7 @@ const cookieparser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
 const authrouter = require('./routes/auth_routes');
+const PdfGenerate = require('./routes/generatepdfroute');
 
 
 const sequelize = new Sequelize('leanterms','','',{
@@ -37,7 +38,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieparser());
 
 app.use(authrouter);
-
+app.use(PdfGenerate);
 
 
 
@@ -47,6 +48,6 @@ app.get('/', function(req, res) {
 
 let port = process.env.port || 5000;
 
-app.listen(port,function(err){
-    console.log("Running Server on port",port)
+app.listen(port, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
