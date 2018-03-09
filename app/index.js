@@ -5,7 +5,7 @@ const path = require('path');
 const cookieparser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
-const authrouter = require('./routes/auth_routes');
+const authRouter = require('./routes/auth_routes');
 
 
 const sequelize = new Sequelize('leanterms','','',{
@@ -33,7 +33,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieparser());
 
-app.use(authrouter);
+app.use(authRouter);
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../','index.html'));
