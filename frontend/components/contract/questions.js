@@ -1,9 +1,9 @@
 export default [
   {
     title: 'Parties',
-    body: 'Are you the landlord or tenant?',
-    radioButtons: ['Landlord', 'Tenant'],
-    radioButtonState: 'party'
+    body: 'Please enter the full names of parties involved:',
+    textFields: ['Landlord', 'Tenant'],
+    textFieldStates: 'party'
   },
   {
     title: 'Lease Type',
@@ -97,8 +97,8 @@ export default [
   {
     title: "First and Last month's Payment Requirements",
     body:
-      'In addition to the desposit, what is the tenant required to pay upon move-in?',
-    radioButtons: ["First month's rent only", "First and last month's rent"],
+      'In addition to the desposit and first month rent, is the tenant required to pay rent for the last month?',
+    radioButtons: ["Yes", 'No'],
     radioButtonState: 'firstLastMonthRequirements'
   },
   {
