@@ -9,15 +9,16 @@ const PdfGenerate = require('./routes/generatepdfroute');
 const authRouter = require('./routes/auth_routes');
 const contractRouter = require('./routes/contract_routes');
 
-
-
-
-
-
+let host;
+if (process.env.NODE_ENV === 'production'){
+    host = "ec2-54-243-142-182.compute-1.amazonaws.com"
+}else{
+    host = "localhost"
+}
 
 
 const sequelize = new Sequelize('leanterms','','',{
-   host: 'localhost',
+   host: host,
    dialect: 'postgres',
     operatorsAliases: false,
     pool:{
