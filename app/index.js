@@ -53,7 +53,7 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../','index.html'));
 });
 
-let port = process.env.port;
+let port =  process.env.PORT;
 
 app.listen(port,function(err){
     console.log("Running Server on port",port);
