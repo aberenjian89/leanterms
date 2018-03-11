@@ -16,8 +16,10 @@
     "operatorsAliases": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "host": "postgresql-triangular-62876.herokuapp.com",
-    "dialect":"postgres"
+    "username": "kalgjzexwlzxic",
+    "password": "9e2e4f63997f8e3cbf0210be372b2fe040c9967a7b6ca43e70ebbd0ac23db132",
+    "database": "d29gjgg23v8m8e",
+    "host": "ec2-54-243-142-182.compute-1.amazonaws.com",
+    "dialect": "postgres",
   }
 }

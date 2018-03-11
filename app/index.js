@@ -10,6 +10,12 @@ const authRouter = require('./routes/auth_routes');
 const contractRouter = require('./routes/contract_routes');
 
 
+
+
+
+
+
+
 const sequelize = new Sequelize('leanterms','','',{
    host: 'localhost',
    dialect: 'postgres',
@@ -37,6 +43,7 @@ app.use(cookieparser());
 
 app.use(PdfGenerate);
 
+
 app.use(authRouter);
 app.use(contractRouter);
 
@@ -50,5 +57,7 @@ let port = process.env.port || 5000;
 app.listen(port,function(err){
     console.log("Running Server on port",port);
 });
+
+module.exports = require('../node_modules/.bin/sequelize');
 
 
