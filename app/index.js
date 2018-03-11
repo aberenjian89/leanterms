@@ -13,7 +13,7 @@ const config = require('./config/config');
 
 let sequelize = null;
 if (process.env.NODE_ENV === 'production'){
-    sequelize = new sequelize(config.production.URI)
+    sequelize = new Sequelize(config.production.URI)
 }else{
      sequelize = new Sequelize('leanterms','','',{
        host: 'localhost',
