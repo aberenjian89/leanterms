@@ -249,11 +249,35 @@ const updateContract = (req,res,next) => {
 };
 
 const deleteContract = (req,res,next) => {
-
+  const errors = [];
+  Contract.findOne({
+      where:{
+        Id: req.body.contractId
+      }
+  }).then(function (contract) {
+      if (contract.contractOwnerId === req.body.userId){
+        contract.destroy();
+        return res.status(200)
+      }else{
+        return res.status(421).json("Not able to Delete Contract")
+      }
+  }).catch(function (err) {
+      res.status(400).send(err)
+  })
+  
 };
 
 const findUserContracts = (req,res,next) => {
-
+    const errors = [];
+    Contract.findAll({
+        where:{
+          contractOwnerId: req.body.userId
+        }
+    }).then(function (contracts) {
+        return res.status(200).send(contracts)
+    }).catch(function () {
+        res.status(400).send(err)
+    })
 };
 
 module.exports = {

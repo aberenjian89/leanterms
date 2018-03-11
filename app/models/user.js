@@ -21,9 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       type: DataTypes.STRING,
       unique: true,
-      validate:{
-          notEmpty: true
-      }
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,

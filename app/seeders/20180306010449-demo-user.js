@@ -4,8 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
    return queryInterface.bulkInsert('Users',[{
        username: "DEMO",
-       password_digest: "12345678",
-       session_token: "sfewrhjdfgerdgdgd",
+       password_digest: "12345678"
    }],{})
   },
 
@@ -13,3 +12,4 @@ module.exports = {
     return queryInterface.bulkDelete('Users',null,{})
   }
 };
+

@@ -67,6 +67,8 @@ const login = (req,res,next) =>{
 
         const hash = user.password_digest ;
         bcrypt.compare(req.body.password,hash,function (err,response) {
+            console.log(response);
+            console.log(err);
            if (response === true){
                res.cookie('leanterms',user.session_token);
                return res.status(200).send({

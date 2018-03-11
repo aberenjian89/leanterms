@@ -46,9 +46,6 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
         unique: true,
-        validate:{
-            notEmpty: true
-        }
       },
       createdAt: {
         allowNull: true,

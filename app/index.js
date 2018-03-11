@@ -15,9 +15,9 @@ let sequelize = null;
 if (process.env.NODE_ENV === 'production'){
     sequelize = new Sequelize(config.production.URI)
 }else{
-     sequelize = new Sequelize('leanterms','','',{
-       host: 'localhost',
-       dialect: 'postgres',
+     sequelize = new Sequelize(config.development.database,'','',{
+       host: config.development.host,
+       dialect: config.development.dialect,
         operatorsAliases: false,
         pool:{
            max: 5,
