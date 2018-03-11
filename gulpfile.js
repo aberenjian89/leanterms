@@ -14,7 +14,7 @@ gulp.task('server',function(){
       script: 'app/index.js',
       delayTime: 1,
       env: {
-         port: 3000
+         PORT: 3000
       },
       watch: jsFiles
    };
