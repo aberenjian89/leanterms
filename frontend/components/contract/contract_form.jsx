@@ -1,8 +1,8 @@
 import React from 'react';
-import Question from './questions';
 import ProgressBar from './progress_bar';
 import ContractFormNavigation from './contract_form_navigation';
 import Questions from './questions';
+import Question from './question';
 
 class ContractForm extends React.Component {
   constructor(props) {
