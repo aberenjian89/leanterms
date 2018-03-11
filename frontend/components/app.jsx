@@ -4,7 +4,7 @@ import NavbarContainter from './navbar/navbar_container';
 import Splash from './homepage/splash';
 import { AuthRoute, ProtectedRoute } from '../utils/route_utils';
 import ContractShowContainer from './contract/contract_show_container';
-import ContractFormContainer from './contract_form_container';
+import ContractFormContainer from './contract/contract_form_container';
 
 
 class App extends React.Component {
